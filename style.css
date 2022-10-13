@@ -27,6 +27,12 @@ small {
     color: #565656;
 }
 
+.cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
 input {
     margin-top: 12px;
     margin-bottom: 8px;
@@ -60,7 +66,7 @@ label {
 
 span.placeholder {
     position: absolute;
-    bottom: 8px;
+    bottom: 16px;
     right: 12px;
 }
 

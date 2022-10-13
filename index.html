@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Renseigner mon temps d'attente - Resto U</title>
 
-    <link rel="stylesheet" href="style.css?setup=ropo">
+    <link rel="stylesheet" href="style.css?setup=zval">
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
@@ -17,11 +17,19 @@
     <h1>Renseigner mon temps d'attente</h1>
 
     <form action="/insert" method="get" id="mainForm">
-        <div class="relative">
-            <label for="min" id="minLabel">Temps d'attente</label>
-            <input id="min" type="tel" placeholder="15" name="waitingTime" required>
-            <span class="placeholder">minutes</span>
+        <div class="cols">
+            <div class="relative">
+                <label for="arrivedAt">Je suis arrivé à</label>
+                <input name="arrivedAt" id="arrivedAt" type="time" required>
+            </div>
+
+            <div class="relative">
+                <label for="min" id="minLabel">J'ai attendu</label>
+                <input id="min" type="tel" placeholder="15" name="waitingTime" required>
+                <span class="placeholder">minutes</span>
+            </div>
         </div>
+
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAAA2crUZByDC6NjE"></div>
 
         <button class="outlined js-getloc hideWhenPosAv">Autoriser la localisation</button>
@@ -55,8 +63,6 @@
             e.preventDefault();
             fillPosition();
         });
-
-        document.getElementById('minLabel').innerText = `J'ai été servi à ${new Date().getHours()}h${new Date().getMinutes().toString().padStart(2, 0)}, j'ai attendu`;
 
         navigator.permissions.query({ name: 'geolocation' })
             .then(permission => {
