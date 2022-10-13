@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Renseigner mon temps d'attente - Resto U</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?setup=zaco">
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
@@ -17,32 +17,53 @@
     <h1>Renseigner mon temps d'attente</h1>
 
     <form action="/insert" method="get" id="mainForm">
-        <label for="min" id="minLabel">Temps d'attente</label>
-        <input id="min" type="number" placeholder="15 minutes" name="waitingTime" required>
+        <div class="relative">
+            <label for="min" id="minLabel">Temps d'attente</label>
+            <input id="min" type="number" placeholder="15" name="waitingTime" required>
+            <span class="placeholder">minutes</span>
+        </div>
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAAA2crUZByDC6NjE"></div>
-        <input type="hidden" name="lat">
-        <input type="hidden" name="lng">
-        <button>Envoyer</button>
+
+        <button class="outlined js-getloc hideWhenPosAv">Autoriser la localisation</button>
+        <input class="hidden" type="text" name="lat" required>
+        <input class="hidden" type="text" name="lng" required>
+        <small class="hideWhenPosAv">Nous avons besoin de votre position afin de renseigner le restaurant dans lequel
+            vous avez fait le queue.
+            <br>Seules vos données d'attente et de position seront enregistrées, et ne seront pas liées à votre
+            appareil.
+        </small>
+
+        <button class="abs">Envoyer</button>
     </form>
 
     <p>Nous récoltons plusieurs données comme le temps d'attente, votre position ou encore l'heure de la journée afin de
         créer un modèle d'IA permettant de prédire le temps d'attente pour un jour donné.</p>
 
     <script>
-        navigator.permissions.query({ name: 'geolocation' })
-            .then(permission => {
-                if (permission.state !== 'granted') {
-                    alert("Nous allons vous demander votre position afin de renseigner le restaurant dans lequel vous avez fait le queue.\n\nSeules vos données d'attente et de position seront enregistrées, mais elles ne seront pas liées à votre appareil.");
-                }
-            });
+        function fillPosition() {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.querySelector('input[name="lat"]').value = position.coords.latitude;
+                document.querySelector('input[name="lng"]').value = position.coords.longitude;
 
-        // request user position
-        navigator.geolocation.getCurrentPosition(function (position) {
-            document.querySelector('input[name="lat"]').value = position.coords.latitude;
-            document.querySelector('input[name="lng"]').value = position.coords.longitude;
+                document.querySelectorAll('.hideWhenPosAv').forEach(function (el) {
+                    el.style.display = 'none';
+                });
+            });
+        }
+
+        document.querySelector('.js-getloc').addEventListener('click', e => {
+            e.preventDefault();
+            fillPosition();
         });
 
-        document.getElementById('minLabel').innerText = `à ${new Date().getHours()}h${new Date().getMinutes()}, j'ai attendu`;
+        document.getElementById('minLabel').innerText = `J'ai été servi à ${new Date().getHours()}h${new Date().getMinutes().toString().padStart(2, 0)}, j'ai attendu`;
+
+        navigator.permissions.query({ name: 'geolocation' })
+            .then(permission => {
+                if (permission.state === 'granted') {
+                    fillPosition();
+                }
+            })
     </script>
 
 </body>

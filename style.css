@@ -6,6 +6,7 @@ body {
 
 body {
     padding: 12px;
+    padding-top: 38px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -15,14 +16,14 @@ body {
 
 small {
     display: block;
-    padding-top: 32px;
 }
 
 h1 {
     font-size: 24px;
 }
 
-p {
+p,
+small {
     color: #565656;
 }
 
@@ -38,12 +39,31 @@ input {
     background-color: #f7f7f7;
 }
 
-button {
+input.hidden {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: 20px;
+    height: 1px;
+    opacity: 0;
+}
+
+label {
+    display: block;
+    padding-top: 16px;
+}
+
+.relative {
+    position: relative;
+}
+
+span.placeholder {
     position: absolute;
-    bottom: 16px;
+    bottom: 8px;
     right: 12px;
-    left: 12px;
-    margin-top: 32px;
+}
+
+button {
     height: 42px;
     border: none;
     border-radius: 2px;
@@ -51,4 +71,20 @@ button {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 14px;
     font-weight: 600;
+    color: #000;
+}
+
+button.abs {
+    position: fixed;
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+}
+
+button.outlined {
+    margin-top: 22px;
+    width: 100%;
+    background: none;
+    border: 1px solid #dedede;
+    box-shadow: none;
 }
