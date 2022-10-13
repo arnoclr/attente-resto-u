@@ -34,6 +34,8 @@ small {
 }
 
 input {
+    appearance: none;
+    -webkit-appearance: none;
     margin-top: 12px;
     margin-bottom: 8px;
     padding: 18px 16px;
@@ -71,6 +73,9 @@ span.placeholder {
 }
 
 button {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
     height: 42px;
     border: none;
     border-radius: 2px;
@@ -81,17 +86,17 @@ button {
     color: #000;
 }
 
-button.abs {
-    position: fixed;
-    bottom: 16px;
-    right: 12px;
-    left: 12px;
-}
-
 button.outlined {
-    margin-top: 22px;
-    width: 100%;
     background: none;
     border: 1px solid #dedede;
     box-shadow: none;
+}
+
+.cf-turnstile iframe {
+    width: 100% !important;
+}
+
+img {
+    width: 100%;
+    height: auto;
 }

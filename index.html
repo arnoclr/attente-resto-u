@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Renseigner mon temps d'attente - Resto U</title>
 
-    <link rel="stylesheet" href="style.css?setup=zval">
+    <link rel="stylesheet" href="style.css?setup=nora">
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
@@ -20,7 +20,7 @@
         <div class="cols">
             <div class="relative">
                 <label for="arrivedAt">Je suis arrivé à</label>
-                <input name="arrivedAt" id="arrivedAt" placeholder="12:00" type="time" required>
+                <input name="arrivedAt" id="arrivedAt" type="time" required>
             </div>
 
             <div class="relative">
@@ -32,20 +32,24 @@
 
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAAA2crUZByDC6NjE"></div>
 
-        <button class="outlined js-getloc hideWhenPosAv">Autoriser la localisation</button>
-        <input class="hidden" type="text" name="lat" required>
-        <input class="hidden" type="text" name="lng" required>
+        <img src="/map.jpg" alt="localisation désactivée" class="hideWhenPosAv" style="padding-top: 22px;">
+        <button style="margin-top: 8px; margin-bottom: 16px;" class="outlined js-getloc hideWhenPosAv">Autoriser la
+            localisation</button>
+        <input type="hidden" name="lat" required>
+        <input type="hidden" name="lng" required>
         <small class="hideWhenPosAv">Nous avons besoin de votre position afin de renseigner le restaurant dans lequel
             vous avez fait le queue.
             <br>Seules vos données d'attente et de position seront enregistrées, et ne seront pas liées à votre
             appareil.
         </small>
 
-        <button class="abs">Envoyer</button>
+        <div style="display: none;" class="js-sendform">
+            <button style="margin-top: 22px;">Envoyer</button>
+            <p>Nous récoltons plusieurs données comme le temps d'attente, votre position ou encore l'heure de la journée
+                afin de
+                créer un modèle d'IA permettant de prédire le temps d'attente pour un jour donné.</p>
+        </div>
     </form>
-
-    <p>Nous récoltons plusieurs données comme le temps d'attente, votre position ou encore l'heure de la journée afin de
-        créer un modèle d'IA permettant de prédire le temps d'attente pour un jour donné.</p>
 
     <script>
         function fillPosition() {
@@ -56,12 +60,19 @@
                 document.querySelectorAll('.hideWhenPosAv').forEach(function (el) {
                     el.style.display = 'none';
                 });
+
+                document.querySelector('.js-sendform').style.display = 'block';
             });
         }
 
         document.querySelector('.js-getloc').addEventListener('click', e => {
             e.preventDefault();
             fillPosition();
+        });
+
+        document.getElementById('arrivedAt').value = new Date().toLocaleTimeString('fr-FR', {
+            hour: '2-digit',
+            minute: '2-digit'
         });
 
         navigator.permissions.query({ name: 'geolocation' })
