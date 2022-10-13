@@ -1,0 +1,1 @@
+Test in local `wrangler pages dev ./`

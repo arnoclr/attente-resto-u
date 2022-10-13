@@ -1,0 +1,54 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 12px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+small {
+    display: block;
+    padding-top: 32px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+p {
+    color: #565656;
+}
+
+input {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    padding: 18px 16px;
+    width: 100%;
+    display: block;
+    height: 32px;
+    border: none;
+    border-radius: 2px;
+    background-color: #f7f7f7;
+}
+
+button {
+    position: absolute;
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+    margin-top: 32px;
+    height: 42px;
+    border: none;
+    border-radius: 2px;
+    background: #dedede;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    font-weight: 600;
+}
